@@ -19,6 +19,7 @@ var gameflag=0;
 var startTouch;
 var endTouch;
 var swipeTolerance = 10;//スワイプかを判断する閾値
+var audioEngine; //BGM再生
 
 var gameScene = cc.Scene.extend({
   onEnter: function() {
@@ -27,8 +28,14 @@ var gameScene = cc.Scene.extend({
     var layer0 = new gameLayer();
     layer0.init();
     this.addChild(layer0);
-
+    //音楽再生エンジン
+        audioEngine = cc.audioEngine;
+        //bgm再生
+        if (!audioEngine.isMusicPlaying()) {
+          audioEngine.playMusic("res/bgm_main.mp3", true);
+          //audioEngine.playMusic(res.bgm_main, true);
   }
+}
 });
 
 var gameLayer = cc.Layer.extend({

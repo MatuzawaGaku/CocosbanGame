@@ -7,7 +7,7 @@ var LevelLayer = cc.Layer.extend({
         scoreText = cc.LabelTTF.create("ゲームクリア!!" ,"Arial","30",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(scoreText);
         scoreText.setPosition(size.width / 2, size.height / 2);
-        
+
  // タップイベントリスナーを登録する
  cc.eventManager.addListener({
      event: cc.EventListener.TOUCH_ONE_BY_ONE,
