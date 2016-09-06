@@ -1,17 +1,21 @@
 var size;
+
 var level = [
   [1, 1, 1, 1, 1, 1, 1],
   [1, 1, 0, 0, 0, 0, 1],
-  [1, 1, 3, 0, 2, 0, 1],
+  [1, 0, 3, 0, 2, 0, 1],
   [1, 0, 0, 4, 0, 0, 1],
-  [1, 0, 3, 1, 2, 0, 1],
+  [1, 0, 3, 0, 0, 2, 1],
   [1, 0, 0, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1, 1]
 ];
+
 var playerPosition; //マップ内のプレイやの位置(ｘ、ｙ)を保持する
 var playerSprite; //プレイヤーのスプライト
 var cratesArray = []; //配置した木箱のスプライトを配列に保持する
 
+var crateflag=0;
+var gameflag=0;
 var startTouch;
 var endTouch;
 var swipeTolerance = 10;//スワイプかを判断する閾値
@@ -52,6 +56,9 @@ var gameLayer = cc.Layer.extend({
       cratesArray[i] = [];　 //配列オブジェクトの生成
       for (j = 0; j < 7; j++) {
         switch (level[i][j]) {
+          case 2:
+            crateflag+=1;
+          break;
           case 4:
           case 6:
             playerSprite = cc.Sprite.create(cache.getSpriteFrame("player.png"));
@@ -146,11 +153,22 @@ switch(level[playerPosition.y+deltaY][playerPosition.x+deltaX]){
         if(level[playerPosition.y+deltaY*2][playerPosition.x+deltaX*2]==0 ||
            level[playerPosition.y+deltaY*2][playerPosition.x+deltaX*2]==2){
             level[playerPosition.y][playerPosition.x]-=4;
+            //console.log(level[playerPosition.y+deltaY][playerPosition.x+deltaX]);木箱移動前
+            if(level[playerPosition.y+deltaY][playerPosition.x+deltaX] == 5){
+              gameflag -= 1;
+            }
             playerPosition.x+=deltaX;
             playerPosition.y+=deltaY;
             level[playerPosition.y][playerPosition.x]+=1;
             playerSprite.setPosition(165+25*playerPosition.x,185-25*playerPosition.y);
             level[playerPosition.y+deltaY][playerPosition.x+deltaX]+=3;
+            //console.log(level[playerPosition.y+deltaY][playerPosition.x+deltaX]);木箱移動後
+            if(level[playerPosition.y+deltaY][playerPosition.x+deltaX]==5){
+              gameflag += 1;
+              if(gameflag == crateflag){
+                cc.director.runScene(new LevelScene());
+              }
+            }
             var movingCrate = cratesArray[playerPosition.y][playerPosition.x];
             movingCrate.setPosition(movingCrate.getPosition().x+25*deltaX,movingCrate.
             getPosition().y-25*deltaY);
