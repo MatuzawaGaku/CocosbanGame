@@ -59,10 +59,12 @@ var gameLayer = cc.Layer.extend({
     levelSprite.setScale(5);
     this.addChild(levelSprite);
 
-    var sprite1 = cc.Sprite.create(res.reset_png);
-   sprite1.setPosition(100, 120);
-   sprite1.setScale(1.2);
-   this.addChild(sprite1, 0);
+
+    var sprite2 = new reset;
+   sprite2.setPosition(100, 120);
+   sprite2.setScale(1.2);
+   this.addChild(sprite2, 0);
+
 
     for (i = 0; i < 7; i++) {　　　　　　
       cratesArray[i] = [];　 //配列オブジェクトの生成
@@ -100,6 +102,39 @@ var gameLayer = cc.Layer.extend({
     //return true;
     cc.eventManager.addListener(listener, this);
   },
+});
+
+var reset = cc.Sprite.extend({
+  ctor:function(){
+    this._super();
+    this.initWithFile(res.reset_png);
+    cc.eventManager.addListener(listener2.clone(), this);
+  }
+});
+
+var listener2 = cc.EventListener.create({
+  event: cc.EventListener.TOUCH_ONE_BY_ONE,
+  swallowTouches: true,
+  onTouchBegan:function(touch, event) {
+    var targettouch = event.getCurrentTarget();
+    var location = targettouch.convertToNodeSpace(touch.getLocation());
+    var targetsize = targettouch.getContentSize();
+    var targetRectangle = cc.rect(0,0,targetsize.width, targetsize.height);
+    if(cc.rectContainsPoint(targetRectangle, location)){
+    level = [
+      [1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 0, 0, 0, 0, 1],
+      [1, 0, 3, 0, 2, 0, 1],
+      [1, 0, 0, 4, 0, 0, 1],
+      [1, 0, 3, 0, 0, 2, 1],
+      [1, 0, 0, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1]
+    ];
+    crateflag = 0;
+    gameflag = 0;
+    cc.director.runScene(new gameScene());
+  }
+}
 });
 
 var listener = cc.EventListener.create({
@@ -178,8 +213,10 @@ switch(level[playerPosition.y+deltaY][playerPosition.x+deltaX]){
             if(level[playerPosition.y+deltaY][playerPosition.x+deltaX]==5){
               gameflag += 1;
               if(gameflag == crateflag){
-                cc.director.runScene(new LevelScene(),5000);
-              }
+                setTimeout(function(){
+                  cc.director.runScene(new LevelScene());
+                },1000);
+                }
             }
             var movingCrate = cratesArray[playerPosition.y][playerPosition.x];
             movingCrate.setPosition(movingCrate.getPosition().x+25*deltaX,movingCrate.
