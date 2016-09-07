@@ -1,6 +1,7 @@
 var res = {
     spritesheet_plist : "res/spritesheet.plist",
     spritesheet_png : "res/spritesheet.png",
+    reset_png : "res/reset.png",
     bgm_mp3 : "res/bgm_main.mp3"
 };
 

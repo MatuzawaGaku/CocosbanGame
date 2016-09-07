@@ -59,6 +59,11 @@ var gameLayer = cc.Layer.extend({
     levelSprite.setScale(5);
     this.addChild(levelSprite);
 
+    var sprite1 = cc.Sprite.create(res.reset_png);
+   sprite1.setPosition(100, 120);
+   sprite1.setScale(1.2);
+   this.addChild(sprite1, 0);
+
     for (i = 0; i < 7; i++) {　　　　　　
       cratesArray[i] = [];　 //配列オブジェクトの生成
       for (j = 0; j < 7; j++) {
@@ -173,7 +178,7 @@ switch(level[playerPosition.y+deltaY][playerPosition.x+deltaX]){
             if(level[playerPosition.y+deltaY][playerPosition.x+deltaX]==5){
               gameflag += 1;
               if(gameflag == crateflag){
-                cc.director.runScene(new LevelScene());
+                cc.director.runScene(new LevelScene(),5000);
               }
             }
             var movingCrate = cratesArray[playerPosition.y][playerPosition.x];
