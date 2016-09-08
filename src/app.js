@@ -65,6 +65,9 @@ var gameLayer = cc.Layer.extend({
    sprite2.setScale(1.2);
    this.addChild(sprite2, 0);
 
+   var label = cc.LabelTTF.create("クリアはよ!!", "Arial", 26);
+       label.setPosition(90,150);
+       this.addChild(label, 1);
 
     for (i = 0; i < 7; i++) {　　　　　　
       cratesArray[i] = [];　 //配列オブジェクトの生成

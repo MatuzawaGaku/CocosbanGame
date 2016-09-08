@@ -6,7 +6,7 @@
     <script type="text/javascript" src="src/resource.js" charset="UTF-8"></script>
     <script type="text/javascript" src="src/app.js" charset="UTF-8"></script>
     <script type="text/javascript" src="src/clear.js" charset="UTF-8"></script>
-</head>
+    <script type="text/javascript" src="src/title.js" charser="UTF-8"></script>
 <body>
     <canvas id="gameCanvas" ></canvas>
     <script type="text/javascript">
@@ -22,7 +22,7 @@
                   cc.view.resizeWithBrowserSize(true);
 
                   cc.LoaderScene.preload(g_resources, function () {
-                       cc.director.runScene(new gameScene());
+                       cc.director.runScene(new titleScene());
                   }, this);
               };
               cc.game.run("gameCanvas");
